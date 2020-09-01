@@ -1,0 +1,336 @@
+﻿<Window x:Class="mf2pdfWpfFramework.templateDefaults"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mf2pdfWpfFramework"
+        mc:Ignorable="d"
+        Title="templateDefaults" Height="650" Width="877" MinWidth="3">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".75*"/>
+            <ColumnDefinition Width=".5*"/>
+            <ColumnDefinition Width=".75*"/>
+            <ColumnDefinition Width=".5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0">
+            <Label FontSize="16">Highway Log Default Values</Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Creator</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogCreator"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Author</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogAuthor"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">indexTopTitle</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogIndexTopTitle"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">fontName</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogFontName"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">fontSize</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogFontSize"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">pageXinches</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogPageXInches"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">pageYinches</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogPageYInches"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">leftMargin</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogLeftMargin"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">topMargin</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogTopMargin"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">headerID</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogHeaderID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">linesToID</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogLinesToID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">offsetToID</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogOffsetToID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">IDTextLength</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogIDTextLength"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">linesToAddID</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogLinesToAddID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">offsetToAddID</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogOffsetToAddID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">addIDLength</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogAddIDLength"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">linesToDetail</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogLinesToDetail"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">offsetToDetail</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogOffsetToDetail"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">detailTextLength</Label>
+                <TextBox Grid.Column="1" x:Name="highwayLogDetailTextLength"></TextBox>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <Label FontSize="16">Locator Log</Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Creator</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogCreator"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Author</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogAuthor"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">indexTopTitle</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogIndexTopTitle"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">fontName</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogFontName"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">fontSize</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogFontSize"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">pageXinches</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogPageXInches"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">pageYinches</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogPageYInches"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">leftMargin</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogLeftMargin"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">topMargin</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogTopMargin"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">headerID</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogHeaderID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">linesToID</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogLinesToID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">offsetToID</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogOffsetToID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">IDTextLength</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogIDTextLength"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">linesToAddID</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogLinesToAddID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">offsetToAddID</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogOffsetToAddID"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">addIDLength</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogAddIDLength"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">linesToDetail</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogLinesToDetail"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">offsetToDetail</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogOffsetToDetail"></TextBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">detailTextLength</Label>
+                <TextBox Grid.Column="1" x:Name="locatorLogDetailTextLength"></TextBox>
+            </Grid>
+        </StackPanel>
+        <Button Grid.Column="0" Grid.Row="2" Height="25" Width="185" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10 10 10 10" x:Name="restoreTemplateValues" Click="restoreTemplateValues_Click">Restore Original Template Values</Button>
+        <StackPanel Grid.Row="1" Grid.Column="3">
+            <Button Height="25" Width="45" Margin="0 0 10 0" HorizontalAlignment="Right" x:Name="templateDefaultsSave" Click="templateDefaultsSave_Click">Save</Button>
+            <Button Height="25" Width="45" Margin="0 10 10 5" HorizontalAlignment="Right" x:Name="templateDefaultsCancel" Click="templateDefaultsCancel_Click">Cancel</Button>
+        </StackPanel>
+    </Grid>
+</Window>

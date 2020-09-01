@@ -1,0 +1,30 @@
+{
+  "job_0": {
+    "reportTitle": "North Central Highway Log",
+    "reportType": "stateHighwayLog",
+    "readDirection": "topToBottom",
+    "inputFile": ".\\nc log 2018.txt",
+    "outputFile": "Set Output PDF Location"
+  },
+  "job_1": {
+    "reportTitle": "District 5 Locator Log",
+    "reportType": "locatorLog",
+    "readDirection": "bottomToTop",
+    "inputFile": ".\\district5LocatorLog.txt",
+    "outputFile": "Set Output PDF Location"
+  },
+  "job_2": {
+    "reportTitle": "Southwest Highway Log",
+    "reportType": "stateHighwayLog",
+    "readDirection": "topToBottom",
+    "inputFile": ".\\sw log 2019.txt",
+    "outputFile": "Set Output PDF Location"
+  },
+  "job_3": {
+    "reportTitle": "Northwest Highway Log",
+    "reportType": "stateHighwayLog",
+    "readDirection": "topToBottom",
+    "inputFile": ".\\nw log 2018.txt",
+    "outputFile": "Set Output PDF Location"
+  }
+}
