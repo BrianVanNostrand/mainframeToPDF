@@ -211,8 +211,8 @@ namespace mf2pdfWpfFramework
                 // ** SECOND BOOKMARK LEVEL (ID1) **
                 //create ID1 (SR ID) Bookmark
                 #region create ID1 bookmark (SRID)
-                if ((int)templateDefaultSet["linesToID"] != 0)
-                {
+               // if ((int)templateDefaultSet["linesToID"] != 0)
+               // {
                     if (pageLineNum == (int)templateDefaultSet["linesToID"])
                     {
                         //get ID1 (SR Number) value
@@ -220,7 +220,7 @@ namespace mf2pdfWpfFramework
                         try
                         {
                             //string headerA = (fileLines[fileLineNum].Substring((int)templateDefaultSet["offsetToID"] - 1, (int)templateDefaultSet["IDTextLength"]).Trim());
-                            ID1 = fileLines[fileLineNum].Substring((int)templateDefaultSet["offsetToID"] - 1, (int)templateDefaultSet["IDTextLength"]).Trim();
+                            ID1 = fileLines[fileLineNum].Substring((int)templateDefaultSet["offsetToID"], (int)templateDefaultSet["IDTextLength"]).Trim();
                         }
                         catch(Exception e)
                         {
@@ -238,7 +238,7 @@ namespace mf2pdfWpfFramework
                         }
                        
                     }
-                }
+                //}
                 #endregion
                 #region  create addID bookmark (SRID modifier: KELSO, HYAK, etc.)
                 if ((int)templateDefaultSet["linesToAddID"] != 0)
