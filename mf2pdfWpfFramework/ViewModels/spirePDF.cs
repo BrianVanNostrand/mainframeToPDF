@@ -9,8 +9,10 @@ using Spire.Pdf.Graphics;
 using Spire.Pdf.Widget;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,41 +23,47 @@ namespace mf2pdfWpfFramework
 {
     class spirePDF
     {
-        static class Globals
-        {
-            public static int currentIDBookmarkIndex;
-        }
-        static public void getPDFParameters(JObject jobsJSON, ListBox jobsItemsControl)
+        public static int currentIDBookmarkIndex;
+        static public async void getPDFParameters(JObject jobsJSON, ListBox jobsItemsControl, ProgressBar progressBar)
         {
             string templateDefaultsRead = File.ReadAllText(@"./templateDefaults.json");
             JObject templateDefaultsJSON = JObject.Parse(templateDefaultsRead);
+            BitmapImage ellipsesBitmap = new BitmapImage();
+            BitmapImage checkMarkBitmap = new BitmapImage();
+            BitmapImage exclamationBitmap = new BitmapImage();
+            ellipsesBitmap.UriSource = new Uri(@"./ellipses.png", UriKind.Relative);
+            checkMarkBitmap.UriSource = new Uri(@"./checkMark.png", UriKind.Relative);
+            exclamationBitmap.UriSource = new Uri(@"./exclamationPoint.png", UriKind.Relative);
+            var progress = new Progress<int>();
+            progressBar.Maximum = jobsJSON.Count;
             for (int j = 0; j < jobsJSON.Count; j += 1)
             {
-                string readDirection = (string)jobsJSON[$"job_{j}"]["readDirection"];
-                string reportType = (string)jobsJSON[$"job_{j}"]["reportType"];
+                string reportType = (string)jobsJSON[$"job_{j}"]["ReportType"];
                 JObject templateDefaultSet = (JObject)templateDefaultsJSON[reportType];
-                var items = jobsItemsControl.Items[j];
-                generatePDF((JObject)jobsJSON[$"job_{j}"], templateDefaultSet, j, jobsItemsControl);
-               
-            }
-        }
-        static public void setLoadStatus(string prompt, ListBox jobsItemsControl, int jobIndex)
-        {
-            if(prompt == "run")
-            {
-                var waitingBrush = new System.Windows.Media.ImageBrush(new BitmapImage(new Uri("./ellipses.png", UriKind.Relative)));
-                foreach (jobUserControl job in jobsItemsControl.Items)
+                jobUserControl job = (jobUserControl)jobsItemsControl.Items[j];
+                System.Windows.Controls.Image jobStatusImage = (System.Windows.Controls.Image)job.FindName("jobStatusImage");
+                jobStatusImage.Source = ellipsesBitmap;
+                await Task.Run(() =>
                 {
-                    
-                }
+                    try
+                    {
+                        generatePDF((JObject)jobsJSON[$"job_{j}"], templateDefaultSet, j, jobsItemsControl, progress);
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            progressBar.Value += 1;
+                            jobStatusImage.Source = checkMarkBitmap;
+                        });
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                   
+                });
             }
-            if(prompt == "processing")
-            {
-                
-                
-            }
+            progressBar.Value = 0;
         }
-        static public void generatePDF(JObject jobJSON, JObject templateDefaultSet, int j, ListBox jobsItemsControl)
+        static public void generatePDF(JObject jobJSON, JObject templateDefaultSet, int j, ListBox jobsItemsControl, IProgress<int> progress)
         {
             #region variable declarations
             //line number within the current page, not within the broader set of lines in the file
@@ -78,117 +86,22 @@ namespace mf2pdfWpfFramework
             PdfTrueTypeFont trueTypeFont = new PdfTrueTypeFont(font);
             #endregion
             #region check form inputs
-            if (job.reportTitleTextbox.Text == "")
-            {
-                job.pdfCreateResponseButton.ToolTip = "Processing Failed. Please provide a report title.";
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
-            if (job.inputFileTextBox.Text == "")
-            {
-                job.pdfCreateResponseButton.ToolTip = "Processing Failed. No input file given.";
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
-            if (job.inputFileTextBox.Text.Substring(job.inputFileTextBox.Text.Length - 4, 4) != ".txt")
-            {
-                job.pdfCreateResponseButton.ToolTip = "Processing Failed. Input must be a text (.txt) file.";
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
-            if (job.outputFileTextBox.Text == "")
-            {
-                job.pdfCreateResponseButton.ToolTip = "Processing Failed. No output file given.";
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
-            if (job.outputFileTextBox.Text.Substring(job.outputFileTextBox.Text.Length - 4, 4) != ".pdf")
-            {
-                job.pdfCreateResponseButton.ToolTip = "Processing Failed. Output must be a PDF (.pdf) file.";
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
+           
             // set report metadata
-            try
-            {
-                document.PageSettings.Height = (int)templateDefaultSet["pageYinches"] * 72;
-            }
-            catch
-            {
-                job.pdfCreateResponseButton.ToolTip = $"Processing failed. Please check the 'pageYInches' parameter in the default values for ${(string)jobJSON["reportType"]} reports. See readme document for more information and parameter definitions.";
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
-            try
-            {
-                document.PageSettings.Width = (int)templateDefaultSet["pageXinches"] * 72;
-            }
-            catch
-            {
-                job.pdfCreateResponseButton.ToolTip = $"Processing failed. Please check the 'pageXinches' parameter in the default values for ${(string)jobJSON["reportType"]} reports. See readme document for more information and parameter definitions.";
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
-            try
-            {
-                document.DocumentInformation.Author = (string)templateDefaultSet["author"];
-            }
-            catch
-            {
-                job.pdfCreateResponseButton.ToolTip = $"Processing failed. Please check the 'author' parameter in the default values for ${(string)jobJSON["reportType"]} reports. See readme document for more information and parameter definitions."; ;
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
-            try
-            {
-                document.DocumentInformation.Title = (string)jobJSON["reportTitle"];
-            }
-            catch
-            {
-                job.pdfCreateResponseButton.ToolTip = $"Processing failed. Please check the 'reportTitle' parameter in the default values for ${(string)jobJSON["reportType"]} reports. See readme document for more information and parameter definitions."; ;
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
-            try
-            {
-                document.DocumentInformation.Creator = (string)templateDefaultSet["creator"];
-            }
-            catch
-            {
-                job.pdfCreateResponseButton.ToolTip = "Processing Failed. Please provide a report title.";
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
-            #endregion
-            #region get array of lines in the file
-            try
-            {
-                fileLines = File.ReadAllLines((string)jobJSON["inputFile"]);
-            }
-            catch (Exception e)
-            {
-                job.pdfCreateResponseButton.ToolTip = e.Message;
-                job.pdfCreateResponseButton.Background = failBrush;
-                job.pdfCreateResponseButton.Visibility = Visibility.Visible;
-                return;
-            }
+            document.PageSettings.Height = (int)templateDefaultSet["pageYinches"] * 72;
+            document.PageSettings.Width = (int)templateDefaultSet["pageXinches"] * 72;
+            document.DocumentInformation.Author = (string)templateDefaultSet["author"];
+            document.DocumentInformation.Title = (string)jobJSON["ReportTitle"];
+            document.DocumentInformation.Creator = (string)templateDefaultSet["creator"];
+            fileLines = File.ReadAllLines((string)jobJSON["InputFile"]);
+           
             #endregion
             #region create first page and top level bookmark
             PdfBookmark titleBookmark = bookmarks.Add((string)templateDefaultSet["indexTopTitle"]);//"routes" etc.
-            if ((string)jobJSON["reportType"] == "stateHighwayLog")
+            if ((string)jobJSON["ReportType"] == "stateHighwayLog")
             {
                 PdfPageBase titlePage = document.Pages.Add();
-                titlePage.Canvas.DrawString((string)jobJSON["reportTitle"], trueTypeFont, new PdfSolidBrush(Color.Black), new PointF(0, 0));
+                titlePage.Canvas.DrawString((string)jobJSON["ReportTitle"], trueTypeFont, new PdfSolidBrush(Color.Black), new PointF(0, 0));
 
                 PdfDestination titleBookmarkDest = new PdfDestination(document.Pages[0], new PointF(0, 0));
                 titleBookmark.Action = new PdfGoToAction(titleBookmarkDest);
@@ -196,14 +109,20 @@ namespace mf2pdfWpfFramework
             PdfPageBase currentPage = document.Pages.Add();
             #endregion
             #region iterate through lines
+            ProgressBar jobProgressBar = (ProgressBar)jobsItemsControl.FindName("jobProgressBar");
+            string jobProgressBarLabelText = ((TextBlock)jobsItemsControl.FindName("jobProgressBarLabel")).Text;
+            jobProgressBar.Maximum = fileLines.Length;
             for (int i = 0; i < fileLines.Length; i += 1)
             {
+                Application.Current.Dispatcher.Invoke(() => {
+                    jobProgressBarLabelText = $"Processing Lines(${i}/${fileLines.Length})";
+                });
                 #region set read direction of text document and assign current line from file
-                if ((string)jobJSON["readDirection"] == "topToBottom")
+                if ((string)jobJSON["ReadDirection"] == "topToBottom")
                 {
                     fileLineNum = i;
                 }
-                if ((string)jobJSON["readDirection"] == "bottomToTop")
+                if ((string)jobJSON["ReadDirection"] == "bottomToTop")
                 {
                     fileLineNum = fileLines.Length - i - 1;
                 }
@@ -226,11 +145,11 @@ namespace mf2pdfWpfFramework
                         {
                             if(e.Message == "Index and length must refer to a location within the string.\r\nParameter name: length")
                             {
-                                job.pdfCreateResponseButton.ToolTip = $"Processing Failed. Either the number of lines to the ID ('lineToID') or the length of the ID text ('IDTextLength') is incorrect. Please check these values for ${(string)jobJSON["reportType"]} reports. See readme document for more information and parameter definitions.";
+                                job.pdfCreateResponseButton.ToolTip = $"Processing Failed. Either the number of lines to the ID ('lineToID') or the length of the ID text ('IDTextLength') is incorrect. Please check these values for ${(string)jobJSON["ReportType"]} reports. See readme document for more information and parameter definitions.";
                             }
                             if(e.Message == "startIndex cannot be larger than length of string.\r\nParameter name: startIndex")
                             {
-                                job.pdfCreateResponseButton.ToolTip = $"Processing Failed. Either the number of lines to the ID ('lineToID') or the offset to the ID text ('offsetToID') is incorrect. Please check these values for ${(string)jobJSON["reportType"]} reports. See readme document for more information and parameter definitions.";
+                                job.pdfCreateResponseButton.ToolTip = $"Processing Failed. Either the number of lines to the ID ('lineToID') or the offset to the ID text ('offsetToID') is incorrect. Please check these values for ${(string)jobJSON["ReportType"]} reports. See readme document for more information and parameter definitions.";
                             }
                             job.pdfCreateResponseButton.Background = failBrush;
                             job.pdfCreateResponseButton.Visibility = Visibility.Visible;
@@ -258,7 +177,7 @@ namespace mf2pdfWpfFramework
                     }
                 }
                 #endregion
-                createID1Bookmark(ID1, bookmarks, titleBookmark, document, pageNumber, (string)jobJSON["reportType"]);
+                createID1Bookmark(ID1, bookmarks, titleBookmark, document, pageNumber, (string)jobJSON["ReportType"]);
                 #region create detail bookmark (sr number)
                 if ((int)templateDefaultSet["linesToDetail"] != 0)
                 {
@@ -270,9 +189,9 @@ namespace mf2pdfWpfFramework
                         if(fileLines[fileLineNum].Length > (int)templateDefaultSet["offsetToDetail"]+ (int)templateDefaultSet["detailTextLength"])
                         {
                             Detail = fileLines[fileLineNum].Substring((int)templateDefaultSet["offsetToDetail"] - 1, (int)templateDefaultSet["detailTextLength"]).Trim();
-                            PdfBookmark newDetailBookmark = bookmarks[0][Globals.currentIDBookmarkIndex - 1].Add(Detail);
+                            PdfBookmark newDetailBookmark = bookmarks[0][currentIDBookmarkIndex - 1].Add(Detail);
                             PdfDestination newDetailBookmarkDest;
-                            if ((string)jobJSON["reportType"] == "stateHighwayLog")
+                            if ((string)jobJSON["ReportType"] == "stateHighwayLog")
                             {
                                 newDetailBookmarkDest = new PdfDestination(document.Pages[pageNumber], new PointF(0, 0));
                             }
@@ -288,7 +207,7 @@ namespace mf2pdfWpfFramework
                 #region populate PDF page and add new page to doc
                 if (fileLines[fileLineNum].Contains((string)templateDefaultSet["headerID"]) == true)//if header ID is found, populate PDF page and add new page add new page
                 {
-                    addLineToPageLinesArray((string)jobJSON["readDirection"], pageLines, fileLines, fileLineNum);//add line with header to page
+                    addLineToPageLinesArray((string)jobJSON["ReadDirection"], pageLines, fileLines, fileLineNum);//add line with header to page
                     #region populate PDF page with lines from pageLines array
                     headerIDFound = true;
                     if (i > 1)
@@ -308,13 +227,14 @@ namespace mf2pdfWpfFramework
                 #region push line to pageLines array
                 else
                 {
-                    addLineToPageLinesArray((string)jobJSON["readDirection"], pageLines, fileLines, fileLineNum); //draw current line (no new page header) to page lines array
+                    addLineToPageLinesArray((string)jobJSON["ReadDirection"], pageLines, fileLines, fileLineNum); //draw current line (no new page header) to page lines array
                 }
                 pageLineNum += 1;
                 #endregion
+                jobProgressBar.Value += 1;
             }
             #endregion
-            if ((string)jobJSON["reportType"] == "locatorLog")
+            if ((string)jobJSON["ReportType"] == "locatorLog")
             {
                 PdfPageBase locatorLogTitlePage = document.Pages.Add();
                 // titlePage.Canvas.DrawString((string)jobJSON["reportTitle"], trueTypeFont, new PdfSolidBrush(Color.Black), new PointF(0, 0));
@@ -323,14 +243,14 @@ namespace mf2pdfWpfFramework
             //if in that iteration, the line header wasn't found, then fail the process.
             if (headerIDFound == false)
             {
-                job.pdfCreateResponseButton.ToolTip = $"No header ID ${(string)templateDefaultSet["headerID"]} found. Please check value for header ID ('headerID') for ${(string)jobJSON["reportType"]} reports. See readme document for more information and parameter definitions."; ;
+                job.pdfCreateResponseButton.ToolTip = $"No header ID ${(string)templateDefaultSet["headerID"]} found. Please check value for header ID ('headerID') for ${(string)jobJSON["ReportType"]} reports. See readme document for more information and parameter definitions."; ;
                 job.pdfCreateResponseButton.Background = failBrush;
                 job.pdfCreateResponseButton.Visibility = Visibility.Visible;
             }
             //Else, save the document
             else {
                 PdfDocument reverseDoc = new PdfDocument();
-                if((string)jobJSON["readDirection"] == "bottomToTop"){
+                if((string)jobJSON["ReadDirection"] == "bottomToTop"){
                     List<int> pageOrderList = new List<int>();
                     List<int> bookmarkOrderList = new List<int>();
                     for (int z = document.Pages.Count-1; z > 0; z--)
@@ -350,15 +270,15 @@ namespace mf2pdfWpfFramework
                         }
                     }
                     int[] orderArray = pageOrderList.ToArray();
-                    document.SaveToFile((string)jobJSON["outputFile"]);
-                    PdfDocument reArrangeDoc = new PdfDocument((string)jobJSON["outputFile"]);
+                    document.SaveToFile((string)jobJSON["OutputFile"]);
+                    PdfDocument reArrangeDoc = new PdfDocument((string)jobJSON["OutputFile"]);
                     reArrangeDoc.Bookmarks.RemoveAt(0);
                     reArrangeDoc.Pages.ReArrange(orderArray);
-                    reArrangeDoc.SaveToFile((string)jobJSON["outputFile"]);
+                    reArrangeDoc.SaveToFile((string)jobJSON["OutputFile"]);
                 }
                 else
                 {
-                    document.SaveToFile((string)jobJSON["outputFile"]);
+                    document.SaveToFile((string)jobJSON["OutputFile"]);
                 }
                 
             };
@@ -388,7 +308,7 @@ namespace mf2pdfWpfFramework
                     newBookmarkDest = new PdfDestination(document.Pages[pageNumber-1], new PointF(0, 0));
                 }
                 ID1Bookmark.Action = new PdfGoToAction(newBookmarkDest);
-                Globals.currentIDBookmarkIndex = bookmarks[0].Count;
+                currentIDBookmarkIndex = bookmarks[0].Count;
             }
         }
         public static void addLineToPageLinesArray(string readDirection, List<string> pageLines, string[] fileLines, int fileLineNum)
@@ -402,5 +322,6 @@ namespace mf2pdfWpfFramework
                 pageLines.Insert(0, fileLines[fileLineNum]);
             }
         }
+       
     }
 }

@@ -29,9 +29,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" x:Name="changeTemplateDefaultsButton" Content="Change Template Defaults" HorizontalAlignment="Right" Click="changeTemplateDefaultsButton_Click" BorderThickness="1,1,1,1"/>
-            <Button Grid.Column="0" x:Name="runButton" Content="Run" HorizontalAlignment="Left" VerticalAlignment="Top" Width="68" Click="runButton_Click"/>
+            <Button Grid.Column="2" x:Name="changeTemplateDefaultsButton" Content="Change Template Defaults" HorizontalAlignment="Right" Click="changeTemplateDefaultsButton_Click" BorderThickness="1,1,1,1"/>
+            <ProgressBar Grid.Column="1" x:Name="progressBar"/>
+            <Button Grid.Column="0" x:Name="runButton" Content="Run Jobs" HorizontalAlignment="Left" VerticalAlignment="Top" Width="68" Click="runButton_Click"/>
         </Grid>
     </Grid>
 </Window>

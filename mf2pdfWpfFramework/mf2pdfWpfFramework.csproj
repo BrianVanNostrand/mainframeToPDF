@@ -83,13 +83,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="spirePDF.cs" />
-    <Compile Include="jobJSON.cs" />
-    <Compile Include="JSONUpdateMethods.cs" />
+    <Compile Include="ViewModels\spirePDF.cs" />
+    <Compile Include="Models\jobObject.cs" />
+    <Compile Include="ViewModels\JSONUpdateMethods.cs" />
     <Compile Include="jobUserControl.xaml.cs">
       <DependentUpon>jobUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="templateDefaultsJson.cs" />
+    <Compile Include="Models\templateDefaultsJson.cs" />
     <Compile Include="templateDefaults.xaml.cs">
       <DependentUpon>templateDefaults.xaml</DependentUpon>
     </Compile>

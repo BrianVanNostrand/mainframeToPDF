@@ -38,3 +38,43 @@ C:\Users\VannosB\source\repos\mf2pdfWpfFramework\mf2pdfWpfFramework\bin\Debug\cl
 C:\Users\VannosB\source\repos\mf2pdfWpfFramework\mf2pdfWpfFramework\bin\Debug\ellipses.png
 C:\Users\VannosB\source\repos\mf2pdfWpfFramework\mf2pdfWpfFramework\bin\Debug\exclamationPoint.png
 C:\Users\VannosB\source\repos\mf2pdfWpfFramework\mf2pdfWpfFramework\bin\Debug\processing.gif
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\Jobs.json
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\sampleJobs.json
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\originalTemplateDefaults.json
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\templateDefaults.json
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\district5LocatorLog.txt
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\nc log 2018.txt
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\nw log 2018.txt
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\sw log 2019.txt
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\checkMark.png
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\closeIcon.png
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\ellipses.png
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\exclamationPoint.png
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\processing.gif
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\mf2pdfWpfFramework.exe.config
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\mf2pdfWpfFramework.exe
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\mf2pdfWpfFramework.pdb
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\Newtonsoft.Json.dll
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\Spire.License.dll
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\Spire.Pdf.dll
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\Microsoft.mshtml.dll
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\Newtonsoft.Json.xml
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\Spire.License.xml
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\Spire.Pdf.xml
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework.csprojAssemblyReference.cache
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\templateDefaults.g.cs
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework_Content.g.cs
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework_MarkupCompile.cache
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework_MarkupCompile.lref
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\templateDefaults.baml
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework.g.resources
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework.Properties.Resources.resources
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework.csproj.GenerateResource.cache
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework.csproj.CopyComplete
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework.exe
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\mf2pdfWpfFramework.pdb
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\MainWindow.g.cs
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\jobUserControl.g.cs
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\App.g.cs
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\MainWindow.baml
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\jobUserControl.baml

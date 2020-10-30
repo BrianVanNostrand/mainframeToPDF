@@ -16,7 +16,7 @@ namespace mf2pdfWpfFramework
             File.WriteAllText(@".\Jobs.json", "{}");//clear json
             JObject jobsJSON = new JObject();
             string jobsJSONText = "";
-            JobJSON jobDefinition;
+            jobObject jobDefinition;
             if (jobsItemControl.Items.Count == 0)
             {
                 jobsJSONText = "{}";
@@ -29,6 +29,7 @@ namespace mf2pdfWpfFramework
                     string inputFile = ((TextBox)LogicalTreeHelper.FindLogicalNode((jobUserControl)jobsItemControl.Items[i], "inputFileTextBox")).Text;
                     string outputFile = ((TextBox)LogicalTreeHelper.FindLogicalNode((jobUserControl)jobsItemControl.Items[i], "outputFileTextBox")).Text;
                     string reportType = "";
+
                     if(((RadioButton)LogicalTreeHelper.FindLogicalNode((jobUserControl)jobsItemControl.Items[i], "highwayLogRadio")).IsChecked == true)
                     {
                         reportType = "stateHighwayLog";
@@ -46,14 +47,7 @@ namespace mf2pdfWpfFramework
                     {
                         readDirection = "bottomToTop";
                     }
-                    jobDefinition = new JobJSON()
-                    {
-                        inputFile = inputFile,
-                        outputFile = outputFile,
-                        readDirection = readDirection,
-                        reportTitle = reportTitle,
-                        reportType = reportType
-                    };
+                    jobDefinition = new jobObject(reportTitle, reportType, readDirection, inputFile, outputFile);// new instance of jobObject class
                     if (i == 0)
                     {
                         if (jobsItemControl.Items.Count == 1)

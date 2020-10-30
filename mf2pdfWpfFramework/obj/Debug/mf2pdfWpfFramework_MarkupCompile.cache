@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\VannosB\source\repos\mf2pdfWpfFramework\mf2pdfWpfFramework\obj\Debug\
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\obj\Debug\
 mf2pdfWpfFramework
 none
 false
 DEBUG;TRACE
-C:\Users\VannosB\source\repos\mf2pdfWpfFramework\mf2pdfWpfFramework\App.xaml
+C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\App.xaml
 3-654204371
 13-1026003001
-12-2050209155
-19-43773170
+11-951408991
+19-659106888
 MainWindow.xaml;jobUserControl.xaml;templateDefaults.xaml;
 
-True
+False
 

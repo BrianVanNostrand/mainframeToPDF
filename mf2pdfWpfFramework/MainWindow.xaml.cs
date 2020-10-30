@@ -46,10 +46,9 @@ namespace mf2pdfWpfFramework
         {
             JSONUpdateMethods.updateJobs(jobsItemsControl);
             string jobsRead = File.ReadAllText(@"./Jobs.json");
-            JObject jobsJSON;
+            JObject jobsJSON;//jobsJson Json Object
             jobsJSON = JObject.Parse(jobsRead);
-            Console.WriteLine(jobsItemsControl);
-            spirePDF.getPDFParameters(jobsJSON, jobsItemsControl);
+            spirePDF.getPDFParameters(jobsJSON, jobsItemsControl, progressBar);
         }
         public void deleteJob(jobUserControl job)
         {

@@ -17,7 +17,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column ="0" Content="Report Title" Height="25"></Label>
                 <TextBox x:Name="reportTitleTextbox" Height="25"  Margin="89,5,51,4.667" Grid.ColumnSpan="2"/>
-                <Button Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column ="3" x:Name="deleteJobButton" Click="deleteJobButton_Click" Foreground="{x:Null}" BorderBrush="{x:Null}" Margin="0,0,3,0" >
+                <Button Height="20" Width="20px" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column ="3" x:Name="deleteJobButton" Click="deleteJobButton_Click" Foreground="{x:Null}" BorderBrush="{x:Null}" Margin="0,0,3,0" >
                     <Button.Background>
                         <ImageBrush ImageSource="./closeIcon.png"/>
                     </Button.Background>
@@ -67,42 +67,34 @@
                 </GroupBox>
 
             </Grid>
-            <Grid Margin="2 2 2 2" Width="810">
+            <Grid  Margin="2 2 2 2" Width="800">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="162*"/>
-                    <ColumnDefinition Width="432*"/>
-                    <ColumnDefinition Width="157*"/>
-                    <ColumnDefinition Width="59*"/>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="400*"/>
+                    <ColumnDefinition Width="300*"/>
+                    <ColumnDefinition Width="25*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Input Text File" Grid.Column="0" Margin="0,0,62,-0.333" x:Name="inputFileButton" Click="inputFileButton_Click"></Button>
-                <TextBox Margin="108,0,62,-0.333" Grid.ColumnSpan="2" x:Name="inputFileTextBox"/>
+                <Button Content="Input Text File" Grid.Column="0" Width="90" x:Name="inputFileButton" Click="inputFileButton_Click"/>
+                <TextBox Width="385px" Grid.Column="1" x:Name="inputFileTextBox"/>
 
             </Grid>
-            <Grid Margin="2 2 2 2" Width="810">
+            <Grid Margin="2 2 2 2" Width="800">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="149*"/>
-                    <ColumnDefinition Width="13*"/>
-                    <ColumnDefinition Width="432*"/>
-                    <ColumnDefinition Width="147*"/>
-                    <ColumnDefinition Width="69*"/>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="400*"/>
+                    <ColumnDefinition Width="300*"/>
+                    <ColumnDefinition Width="25*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Output PDF File" Grid.Column="0" Margin="0,0,47.667,-0.333" x:Name="outputFileButton" Click="outputFileButton_Click"/>
-                <TextBox Margin="108,0,62,-0.333" Grid.ColumnSpan="3" x:Name="outputFileTextBox"/>
-                <Button Visibility="Hidden" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column ="4" x:Name="pdfCreateResponseButton">
-                    <Button.Background>
-                        <ImageBrush ImageSource="./exclamationPoint.png"/>
-                    </Button.Background>
-                    <Button.ToolTip>
-                        <ToolTip>
-                            Click Here
-                        </ToolTip>
-                    </Button.ToolTip>
+                <Button Content="Output PDF File" Grid.Column="0" Width="90" x:Name="outputFileButton" Click="outputFileButton_Click"/>
+                <TextBox  Width="385px" Grid.Column="1" x:Name="outputFileTextBox"/>
+                <Grid Grid.Column ="2">
+                    <ProgressBar x:Name="jobProgressBar" Width="290"/>
+                    <TextBlock x:Name="jobProgressBarLabel"></TextBlock>
+                </Grid>
+                <Button Width="20" Height="20" HorizontalAlignment="Center"  VerticalAlignment="Top" Grid.Column ="4" x:Name="pdfCreateResponseButton" >
+                    <Image x:Name="jobStatusImage" Source="./closeIcon.png" Visibility="Hidden"/>
                 </Button>
-
-
-                <!--<Button Width="49" HorizontalAlignment="Right" Content="Run" Grid.Column="4" Margin="0,0,10,-0.333"></Button>-->
             </Grid>
         </StackPanel>
-
     </Border>
 </UserControl>
