@@ -19,7 +19,7 @@
                 <TextBox x:Name="reportTitleTextbox" Height="25"  Margin="89,5,51,4.667" Grid.ColumnSpan="2"/>
                 <Button Height="20" Width="20px" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column ="3" x:Name="deleteJobButton" Click="deleteJobButton_Click" Foreground="{x:Null}" BorderBrush="{x:Null}" Margin="0,0,3,0" >
                     <Button.Background>
-                        <ImageBrush ImageSource="./closeIcon.png"/>
+                        <ImageBrush ImageSource="Images/closeIcon.png"/>
                     </Button.Background>
                 </Button>
             </Grid>
@@ -76,7 +76,7 @@
                 </Grid.ColumnDefinitions>
                 <Button Content="Input Text File" Grid.Column="0" Width="90" x:Name="inputFileButton" Click="inputFileButton_Click"/>
                 <TextBox Width="385px" Grid.Column="1" x:Name="inputFileTextBox"/>
-
+               
             </Grid>
             <Grid Margin="2 2 2 2" Width="800">
                 <Grid.ColumnDefinitions>
@@ -87,12 +87,14 @@
                 </Grid.ColumnDefinitions>
                 <Button Content="Output PDF File" Grid.Column="0" Width="90" x:Name="outputFileButton" Click="outputFileButton_Click"/>
                 <TextBox  Width="385px" Grid.Column="1" x:Name="outputFileTextBox"/>
-                <Grid Grid.Column ="2">
+                <Grid Grid.Column ="2" x:Name="jobProgressBarGrid" Visibility="Hidden">
                     <ProgressBar x:Name="jobProgressBar" Width="290"/>
                     <TextBlock x:Name="jobProgressBarLabel"></TextBlock>
                 </Grid>
-                <Button Width="20" Height="20" HorizontalAlignment="Center"  VerticalAlignment="Top" Grid.Column ="4" x:Name="pdfCreateResponseButton" >
-                    <Image x:Name="jobStatusImage" Source="./closeIcon.png" Visibility="Hidden"/>
+                <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column ="4" x:Name="pdfCreateResponseButton" Visibility="Hidden" >
+                    <Button.Background>
+                        <ImageBrush x:Name="jobStatusImage"/>
+                    </Button.Background>
                 </Button>
             </Grid>
         </StackPanel>

@@ -16,8 +16,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("nc%20log%202018.txt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("nw%20log%202018.txt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sw%20log%202019.txt")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("checkmark.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("closeicon.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ellipses.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("exclamationpoint.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("processing.gif")]

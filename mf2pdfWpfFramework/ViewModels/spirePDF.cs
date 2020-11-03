@@ -24,35 +24,37 @@ namespace mf2pdfWpfFramework
     class spirePDF
     {
         public static int currentIDBookmarkIndex;
-        static public async void getPDFParameters(JObject jobsJSON, ListBox jobsItemsControl, ProgressBar progressBar)
+        static public async void getPDFParameters(JObject jobsJSON, ListBox jobsItemsControl, ProgressBar progressBar, TextBlock progressBarLabel)
         {
             string templateDefaultsRead = File.ReadAllText(@"./templateDefaults.json");
             JObject templateDefaultsJSON = JObject.Parse(templateDefaultsRead);
-            BitmapImage ellipsesBitmap = new BitmapImage();
-            BitmapImage checkMarkBitmap = new BitmapImage();
-            BitmapImage exclamationBitmap = new BitmapImage();
-            ellipsesBitmap.UriSource = new Uri(@"./ellipses.png", UriKind.Relative);
-            checkMarkBitmap.UriSource = new Uri(@"./checkMark.png", UriKind.Relative);
-            exclamationBitmap.UriSource = new Uri(@"./exclamationPoint.png", UriKind.Relative);
-            var progress = new Progress<int>();
             progressBar.Maximum = jobsJSON.Count;
+            progressBarLabel.Text = $"Processing job 1/{jobsJSON.Count}";
+            #region update progress bar to reflect jobs processed
+            IProgress<int> progress = new Progress<int>((value)=>
+            {
+                progressBar.Value = value;
+                if (value != jobsJSON.Count)
+                {
+                    progressBarLabel.Text = $"Processing job {value+1}/{jobsJSON.Count}";
+                }
+                else
+                {
+                    progressBarLabel.Text = $"Processing Complete";
+                }
+            });
+            #endregion
             for (int j = 0; j < jobsJSON.Count; j += 1)
             {
                 string reportType = (string)jobsJSON[$"job_{j}"]["ReportType"];
                 JObject templateDefaultSet = (JObject)templateDefaultsJSON[reportType];
                 jobUserControl job = (jobUserControl)jobsItemsControl.Items[j];
-                System.Windows.Controls.Image jobStatusImage = (System.Windows.Controls.Image)job.FindName("jobStatusImage");
-                jobStatusImage.Source = ellipsesBitmap;
+             
                 await Task.Run(() =>
                 {
                     try
                     {
-                        generatePDF((JObject)jobsJSON[$"job_{j}"], templateDefaultSet, j, jobsItemsControl, progress);
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            progressBar.Value += 1;
-                            jobStatusImage.Source = checkMarkBitmap;
-                        });
+                        generatePDF((JObject)jobsJSON[$"job_{j}"], templateDefaultSet, j, jobsItemsControl, progress, job);//run the generate pdf method
                     }
                     catch(Exception e)
                     {
@@ -61,10 +63,10 @@ namespace mf2pdfWpfFramework
                    
                 });
             }
-            progressBar.Value = 0;
         }
-        static public void generatePDF(JObject jobJSON, JObject templateDefaultSet, int j, ListBox jobsItemsControl, IProgress<int> progress)
+        static public async void generatePDF(JObject jobJSON, JObject templateDefaultSet, int j, ListBox jobsItemsControl, IProgress<int> progress, jobUserControl job)
         {
+            
             #region variable declarations
             //line number within the current page, not within the broader set of lines in the file
             int fileLineNum = 0; //i or file lines count -1 -i, iterated value index through list of all lines in the document
@@ -75,27 +77,86 @@ namespace mf2pdfWpfFramework
             string Detail;
             string[] fileLines = new string[] { "" }; //array of all of the lines red in the text file, in the order that they were read, top to bottom
             bool headerIDFound = false;
-            var passBrush = new System.Windows.Media.ImageBrush(new BitmapImage(new Uri("./images/checkMark.png", UriKind.Relative)));
-            var failBrush = new System.Windows.Media.ImageBrush(new BitmapImage(new Uri("./images/exclamationPoint.png", UriKind.Relative)));
             List<string> pageLines = new List<string>();//aray of lines in the current page
-            jobUserControl job = (jobUserControl)jobsItemsControl.Items[j];
             FontFamily fontName = new System.Drawing.FontFamily((string)templateDefaultSet["fontName"]);
             PdfDocument document = new PdfDocument();
             PdfBookmarkCollection bookmarks = document.Bookmarks;
             Font font = new Font(fontName, fontSize, FontStyle.Regular);
             PdfTrueTypeFont trueTypeFont = new PdfTrueTypeFont(font);
             #endregion
-            #region check form inputs
-           
-            // set report metadata
+
+            #region set report metadata
             document.PageSettings.Height = (int)templateDefaultSet["pageYinches"] * 72;
             document.PageSettings.Width = (int)templateDefaultSet["pageXinches"] * 72;
             document.DocumentInformation.Author = (string)templateDefaultSet["author"];
             document.DocumentInformation.Title = (string)jobJSON["ReportTitle"];
             document.DocumentInformation.Creator = (string)templateDefaultSet["creator"];
             fileLines = File.ReadAllLines((string)jobJSON["InputFile"]);
-           
             #endregion
+
+            #region create IProgress to monitor text document parsing and PDF creation
+            IProgress<int> jobProgress = new Progress<int>((linevalue) =>
+            {
+                 ProgressBar jobProgressBar;
+                 TextBlock jobProgressBarLabel;
+                 Grid jobProgressBarGrid;
+                 job.Dispatcher.Invoke(() =>
+                 {
+                     jobProgressBar = (ProgressBar)job.FindName("jobProgressBar");
+                     jobProgressBarLabel = (TextBlock)job.FindName("jobProgressBarLabel");
+                     jobProgressBarGrid= (Grid)job.FindName("jobProgressBarGrid");
+                     jobProgressBarLabel.Text = $"Processing line 1/${fileLines.Length}";
+                     jobProgressBar.Value = linevalue;
+                     if (linevalue != fileLines.Length-1)
+                     {
+                         if(jobProgressBar.Visibility == Visibility.Hidden || jobProgressBarLabel.Visibility == Visibility.Hidden)//expose the progress bar
+                         {
+                             jobProgressBar.Visibility = Visibility.Visible;
+                             jobProgressBarLabel.Visibility = Visibility.Visible;
+                         }
+                         jobProgressBarLabel.Text = $"Processing job {linevalue + 1}/{fileLines.Length}";//update the progress bar text label
+                     }
+                     else//hide the progress bar
+                     {
+                         jobProgressBar.Visibility = Visibility.Hidden;
+                         jobProgressBarLabel.Visibility = Visibility.Hidden;
+                     }
+                 });
+             });
+            IProgress<string> jobMessage = new Progress<string>((Message) => 
+            {
+                Button pdfCreateResponseButton;
+                System.Windows.Media.ImageBrush jobStatusImage;
+                #region image bitmaps
+                #endregion
+                job.Dispatcher.Invoke(() =>
+                {
+                    pdfCreateResponseButton = (Button)job.FindName("pdfCreateResponseButton");
+                    jobStatusImage = (System.Windows.Media.ImageBrush)job.FindName("jobStatusImage");
+                    Uri checkMarkUri = new Uri(@"Images/checkMark.png", UriKind.Relative);
+                    Uri exclamationPointUri = new Uri(@"Images/exclamationPoint.png", UriKind.Relative);
+                    System.Windows.Media.ImageSource checkMarkImageSource = new BitmapImage(checkMarkUri);
+                    System.Windows.Media.ImageSource exclamationPointImageSource = new BitmapImage(exclamationPointUri);
+                    if (Message == "jobComplete")
+                    {
+                        jobStatusImage.ImageSource = checkMarkImageSource;//set button image
+                        pdfCreateResponseButton.Visibility = Visibility.Visible;//show response button
+                        pdfCreateResponseButton.Click += (s, e) => {
+                            System.Diagnostics.Process.Start((string)jobJSON["OutputFile"]);//open the file in windows
+                        };
+                    }
+                    else
+                    {
+                        jobStatusImage.ImageSource = exclamationPointImageSource;//set button image
+                        pdfCreateResponseButton.Visibility = Visibility.Visible;//show response button
+                        pdfCreateResponseButton.Click += (s, e) => {
+                            MessageBox.Show(Message);
+                        };
+                    }
+                });
+            });
+             #endregion
+
             #region create first page and top level bookmark
             PdfBookmark titleBookmark = bookmarks.Add((string)templateDefaultSet["indexTopTitle"]);//"routes" etc.
             if ((string)jobJSON["ReportType"] == "stateHighwayLog")
@@ -108,15 +169,10 @@ namespace mf2pdfWpfFramework
             };
             PdfPageBase currentPage = document.Pages.Add();
             #endregion
+
             #region iterate through lines
-            ProgressBar jobProgressBar = (ProgressBar)jobsItemsControl.FindName("jobProgressBar");
-            string jobProgressBarLabelText = ((TextBlock)jobsItemsControl.FindName("jobProgressBarLabel")).Text;
-            jobProgressBar.Maximum = fileLines.Length;
             for (int i = 0; i < fileLines.Length; i += 1)
             {
-                Application.Current.Dispatcher.Invoke(() => {
-                    jobProgressBarLabelText = $"Processing Lines(${i}/${fileLines.Length})";
-                });
                 #region set read direction of text document and assign current line from file
                 if ((string)jobJSON["ReadDirection"] == "topToBottom")
                 {
@@ -151,7 +207,6 @@ namespace mf2pdfWpfFramework
                             {
                                 job.pdfCreateResponseButton.ToolTip = $"Processing Failed. Either the number of lines to the ID ('lineToID') or the offset to the ID text ('offsetToID') is incorrect. Please check these values for ${(string)jobJSON["ReportType"]} reports. See readme document for more information and parameter definitions.";
                             }
-                            job.pdfCreateResponseButton.Background = failBrush;
                             job.pdfCreateResponseButton.Visibility = Visibility.Visible;
                             break;
                         }
@@ -231,7 +286,8 @@ namespace mf2pdfWpfFramework
                 }
                 pageLineNum += 1;
                 #endregion
-                jobProgressBar.Value += 1;
+                jobProgress.Report(i);
+
             }
             #endregion
             if ((string)jobJSON["ReportType"] == "locatorLog")
@@ -244,7 +300,6 @@ namespace mf2pdfWpfFramework
             if (headerIDFound == false)
             {
                 job.pdfCreateResponseButton.ToolTip = $"No header ID ${(string)templateDefaultSet["headerID"]} found. Please check value for header ID ('headerID') for ${(string)jobJSON["ReportType"]} reports. See readme document for more information and parameter definitions."; ;
-                job.pdfCreateResponseButton.Background = failBrush;
                 job.pdfCreateResponseButton.Visibility = Visibility.Visible;
             }
             //Else, save the document
@@ -270,7 +325,14 @@ namespace mf2pdfWpfFramework
                         }
                     }
                     int[] orderArray = pageOrderList.ToArray();
-                    document.SaveToFile((string)jobJSON["OutputFile"]);
+                    try
+                    {
+                        document.SaveToFile((string)jobJSON["OutputFile"]);
+                    }
+                    catch(Exception e)
+                    {
+                        jobMessage.Report(e.ToString());
+                    }
                     PdfDocument reArrangeDoc = new PdfDocument((string)jobJSON["OutputFile"]);
                     reArrangeDoc.Bookmarks.RemoveAt(0);
                     reArrangeDoc.Pages.ReArrange(orderArray);
@@ -280,8 +342,9 @@ namespace mf2pdfWpfFramework
                 {
                     document.SaveToFile((string)jobJSON["OutputFile"]);
                 }
-                
             };
+            progress.Report(j+1);//report to the main window the number (not index) of the job that just finished.
+            jobMessage.Report("jobComplete");//report to the job user control that the job has saved
         }/**/
    
         public static void createID1Bookmark(string ID1, PdfBookmarkCollection bookmarks, PdfBookmark titleBookmark, PdfDocument document, int pageNumber, string reportType)

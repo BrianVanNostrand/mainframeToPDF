@@ -32,7 +32,10 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="2" x:Name="changeTemplateDefaultsButton" Content="Change Template Defaults" HorizontalAlignment="Right" Click="changeTemplateDefaultsButton_Click" BorderThickness="1,1,1,1"/>
-            <ProgressBar Grid.Column="1" x:Name="progressBar"/>
+            <Grid Grid.Column ="1">
+                <ProgressBar x:Name="progressBar" Width="290"/>
+                <TextBlock x:Name="progressBarLabel"></TextBlock>
+            </Grid>
             <Button Grid.Column="0" x:Name="runButton" Content="Run Jobs" HorizontalAlignment="Left" VerticalAlignment="Top" Width="68" Click="runButton_Click"/>
         </Grid>
     </Grid>

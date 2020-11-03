@@ -27,6 +27,7 @@ namespace mf2pdfWpfFramework
         }
         private void addJobbutton_Click(object sender, RoutedEventArgs e)
         {
+            progressBar.Value = 0;
             jobsCount += 1;
             jobUserControl newJob = new jobUserControl();
             newJob.jobNumber = jobsCount;
@@ -35,6 +36,7 @@ namespace mf2pdfWpfFramework
         }
         private void loadSampleButton_Click(object sender, RoutedEventArgs e)
         {
+            progressBar.Value = 0;
             loadState(@"./sampleJobs.json");
         }
         private void changeTemplateDefaultsButton_Click(object sender, RoutedEventArgs e)
@@ -44,11 +46,12 @@ namespace mf2pdfWpfFramework
         }
         private void runButton_Click(object sender, RoutedEventArgs e)
         {
+            progressBar.Value = 0;
             JSONUpdateMethods.updateJobs(jobsItemsControl);
             string jobsRead = File.ReadAllText(@"./Jobs.json");
             JObject jobsJSON;//jobsJson Json Object
             jobsJSON = JObject.Parse(jobsRead);
-            spirePDF.getPDFParameters(jobsJSON, jobsItemsControl, progressBar);
+            spirePDF.getPDFParameters(jobsJSON, jobsItemsControl, progressBar, progressBarLabel);
         }
         public void deleteJob(jobUserControl job)
         {
@@ -61,6 +64,7 @@ namespace mf2pdfWpfFramework
                 }
             }
             jobsItemsControl.Items.Remove(jobToRemove);
+            progressBar.Value = 0;
         }
         private void clearJobsButton_Click(object sender, RoutedEventArgs e)
         {
@@ -68,9 +72,11 @@ namespace mf2pdfWpfFramework
             {
                 jobsItemsControl.Items.Clear();
             }
+            progressBar.Value = 0;
         }
         private void loadState(string source)
         {
+            progressBar.Value = 0;
             string json = File.ReadAllText(source);
             JObject lastStateJson;
             try { 

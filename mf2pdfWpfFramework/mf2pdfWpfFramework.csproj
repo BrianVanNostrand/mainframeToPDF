@@ -133,6 +133,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Resource Include="images\checkMark.png" />
+    <Resource Include="images\closeIcon.png" />
+    <Resource Include="images\ellipses.png" />
+    <Resource Include="images\exclamationPoint.png" />
+    <Resource Include="images\processing.gif" />
     <Content Include="Jobs.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -181,12 +186,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="checkMark.png">
+    <Resource Include="checkMark.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="closeIcon.png">
+    </Resource>
+    <Resource Include="closeIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <Content Include="ellipses.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
