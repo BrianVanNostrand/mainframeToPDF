@@ -60,7 +60,6 @@ namespace mf2pdfWpfFramework
                     {
                         Console.WriteLine(e);
                     }
-                   
                 });
             }
         }
@@ -123,38 +122,61 @@ namespace mf2pdfWpfFramework
                      }
                  });
              });
-            IProgress<string> jobMessage = new Progress<string>((Message) => 
+            IProgress<string> jobMessage = new Progress<string>((Message) =>
             {
-                Button pdfCreateResponseButton;
-                System.Windows.Media.ImageBrush jobStatusImage;
-                #region image bitmaps
-                #endregion
-                job.Dispatcher.Invoke(() =>
-                {
+                job.Dispatcher.Invoke(() => {
+                    BitmapImage BitmapToImageSource(Bitmap bitmap)
+                    {
+                        using (MemoryStream memory = new MemoryStream())
+                        {
+                            bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                            memory.Position = 0;
+                            BitmapImage bitmapimage = new BitmapImage();
+                            bitmapimage.BeginInit();
+                            bitmapimage.StreamSource = memory;
+                            bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmapimage.EndInit();
+
+                            return bitmapimage;
+                        }
+                    }
+                    Button pdfCreateResponseButton;
+                    System.Windows.Media.ImageBrush jobStatusImage;
+                    System.Windows.Media.ImageSource checkMarkImageSource = BitmapToImageSource(Properties.Resources.checkMark);
+                    System.Windows.Media.ImageSource exclamationPointImageSource = BitmapToImageSource(Properties.Resources.exclamationPoint);
                     pdfCreateResponseButton = (Button)job.FindName("pdfCreateResponseButton");
                     jobStatusImage = (System.Windows.Media.ImageBrush)job.FindName("jobStatusImage");
-                    Uri checkMarkUri = new Uri(@"Images/checkMark.png", UriKind.Relative);
-                    Uri exclamationPointUri = new Uri(@"Images/exclamationPoint.png", UriKind.Relative);
-                    System.Windows.Media.ImageSource checkMarkImageSource = new BitmapImage(checkMarkUri);
-                    System.Windows.Media.ImageSource exclamationPointImageSource = new BitmapImage(exclamationPointUri);
+
                     if (Message == "jobComplete")
                     {
                         jobStatusImage.ImageSource = checkMarkImageSource;//set button image
                         pdfCreateResponseButton.Visibility = Visibility.Visible;//show response button
-                        pdfCreateResponseButton.Click += (s, e) => {
-                            System.Diagnostics.Process.Start((string)jobJSON["OutputFile"]);//open the file in windows
+                        pdfCreateResponseButton.Click += (s, e) =>
+                        {
+                            try
+                            {
+                                System.Diagnostics.Process.Start((string)jobJSON["OutputFile"]);
+                            }
+                            catch
+                            {
+                                return;
+                            }
+                            //open the file in windows
                         };
                     }
                     else
                     {
                         jobStatusImage.ImageSource = exclamationPointImageSource;//set button image
                         pdfCreateResponseButton.Visibility = Visibility.Visible;//show response button
-                        pdfCreateResponseButton.Click += (s, e) => {
+                        pdfCreateResponseButton.Click += (s, e) =>
+                        {
                             MessageBox.Show(Message);
                         };
                     }
                 });
             });
+
+
              #endregion
 
             #region create first page and top level bookmark
@@ -340,13 +362,22 @@ namespace mf2pdfWpfFramework
                 }
                 else
                 {
-                    document.SaveToFile((string)jobJSON["OutputFile"]);
+                    try
+                    {
+                           document.SaveToFile((string)jobJSON["OutputFile"]);
+                    }
+                    catch
+                    {
+                        jobMessage.Report("Unable to save. Make sure the output document is not open in a PDF reader and that the output path is valid.");
+                    }
+                    
                 }
             };
             progress.Report(j+1);//report to the main window the number (not index) of the job that just finished.
             jobMessage.Report("jobComplete");//report to the job user control that the job has saved
         }/**/
-   
+
+
         public static void createID1Bookmark(string ID1, PdfBookmarkCollection bookmarks, PdfBookmark titleBookmark, PdfDocument document, int pageNumber, string reportType)
         {
             //confirm that the current ID1 is not already a bookmark

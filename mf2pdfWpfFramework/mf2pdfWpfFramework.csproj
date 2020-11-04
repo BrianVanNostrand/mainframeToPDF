@@ -186,18 +186,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="checkMark.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="closeIcon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Content Include="ellipses.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="exclamationPoint.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="processing.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

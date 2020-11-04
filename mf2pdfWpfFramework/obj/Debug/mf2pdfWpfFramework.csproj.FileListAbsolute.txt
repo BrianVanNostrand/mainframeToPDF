@@ -46,8 +46,6 @@ C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\
 C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\nc log 2018.txt
 C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\nw log 2018.txt
 C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\sw log 2019.txt
-C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\ellipses.png
-C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\exclamationPoint.png
 C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\processing.gif
 C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\mf2pdfWpfFramework.exe.config
 C:\Users\VannosB\source\repos\mainframe-to-pdf-converter\mf2pdfWpfFramework\bin\Debug\mf2pdfWpfFramework.exe
